@@ -18,9 +18,11 @@ import com.eshoppingzone.orders.model.Address;
 import com.eshoppingzone.orders.model.Cart;
 import com.eshoppingzone.orders.model.Orders;
 import com.eshoppingzone.orders.model.Product;
+import com.eshoppingzone.orders.model.TransactionDetails;
 import com.eshoppingzone.orders.model.Items;
-import com.eshoppingzone.orders.repository.AddressRepository;
 import com.eshoppingzone.orders.repository.OrderRepository;
+import com.eshoppingzone.orders.repository.TransactionRepository;
+import com.eshoppingzone.orders.repository.AddressRepository;
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
@@ -41,8 +43,16 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private SequenceGeneratorService seqService;
 	
-//	@Autowired
-//	RestTemplate restTemplate;
+	
+	@Autowired
+	private TransactionRepository transactionrepository;
+	
+private static final String KEY = "rzp_test_Ow82Z0SUwVS5QI";
+	
+	private static final String KEY_SECRET = "Ol43DVmM2ztA1XdWyeJ1JAxo";
+	
+	private static final String CURRENCY= "INR";
+
 	
 	
 	//listing all orders 
@@ -76,12 +86,13 @@ public class OrderServiceImpl implements OrderService {
 		Address address=  addressRepository.findByFullName(fullName).get(0);
 		order.setCustomerId(address.getCustomerId());
 		order.setAddress(address); 
+		order.setItems(cart.getItems());
 		
 		
 		orderRepository.save(order);
 		 logger.info(("order is placed with"+order.getOrderId()));
 		 
-//		 restTemplate.delete("http://localhost:8003/cart/delete/"+cart.getCartId());
+
 		
 	}
 	
@@ -144,21 +155,36 @@ public class OrderServiceImpl implements OrderService {
 
 	
 	//online payment  to place order
-	@Override
-	public String onlinePayment(Cart cart) throws RazorpayException {
-		
-		double amt= cart.getTotalPrice();
-		System.out.println(amt);
-		
-		 RazorpayClient client =  new RazorpayClient("rzp_test_0LLxBP5PFdpRSP","z4NhG0iS2PGwHmyhRjXO3XGo" );
-		 JSONObject options = new JSONObject();
-		 options.put("amount", amt*100);
-		 options.put("currency", "INR");
-		 options.put("receipt", "txn_123456");
-		 Order order = client.Orders.create(options);
-		 System.out.println(order);
-		 return order.toString();
+	public TransactionDetails createTransaction(double amount) {
+		try {
+			
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("amount", (amount*100));
+			jsonObject.put("currency", CURRENCY);
+			
+			RazorpayClient razorpayClient = new RazorpayClient(KEY, KEY_SECRET);
+			
+			Order order = razorpayClient.orders.create(jsonObject);
+			
+			return prepareTransactionDetails(order);
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return null;
 	}
+	
+	private TransactionDetails prepareTransactionDetails(Order order) {
+		String orderId = order.get("id");
+		String currency = order.get("currency");
+		Integer amount = order.get("amount");
+		
+		TransactionDetails details = new TransactionDetails(orderId,currency,amount,KEY);
+		
+		return transactionrepository.save(details);
+	}
+	
+	
+	
 	
 	//find order by customer fullName
 	@Override

@@ -1,0 +1,49 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007fffb4ec85a6, pid=15308, tid=18084
+#
+# JRE version: OpenJDK Runtime Environment Temurin-17.0.7+7 (17.0.7+7) (build 17.0.7+7)
+# Java VM: OpenJDK 64-Bit Server VM Temurin-17.0.7+7 (17.0.7+7, mixed mode, emulated-client, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# Problematic frame:
+# V  [jvm.dll+0x3885a6]
+#
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   https://github.com/adoptium/adoptium-support/issues
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=50234 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost -Dspring.jmx.enabled=true -Dmanagement.endpoints.jmx.exposure.include=* -Dspring.application.admin.enabled=true -XX:TieredStopAtLevel=1 -Dspring.boot.project.name=spring-profile-product -Dfile.encoding=UTF-8 -XX:+ShowCodeDetailsInExceptionMessages com.eshoppingzone.SpringProfileProductApplication --spring.output.ansi.enabled=always
+
+Host: AMD Ryzen 5 4600H with Radeon Graphics         , 12 cores, 7G,  Windows 11 , 64 bit Build 22621 (10.0.22621.1778)
+Time: Fri Jul  7 14:42:27 2023 India Standard Time elapsed time: 10384.025615 seconds (0d 2h 53m 4s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000023e7ea2e090):  JavaThread "http-nio-8082-exec-8" daemon [_thread_in_vm, id=18084, stack(0x000000506a800000,0x000000506a900000)]
+
+Stack: [0x000000506a800000,0x000000506a900000],  sp=0x000000506a8f3bf0,  free space=974k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x3885a6]
+V  [jvm.dll+0x677472]
+V  [jvm.dll+0x3891fb]
+V  [jvm.dll+0x3893c8]
+V  [jvm.dll+0x7af1da]
+V  [jvm.dll+0x7b0402]
+V  [jvm.dll+0x7b0738]
+V  [jvm.dll+0x81e93e]
+V  [jvm.dll+0x81e35a]
+V  [jvm.dll+0x820778]
+V  [jvm.dll+0x828c7c]
+V  [jvm.dll+0x821e4c]
+V  [jvm.dll+0x371afc]
+V  [jvm.dll+0x370bc4]
+V  [jvm.dll+0x370b68]
+V  [jvm.dll+0x560055]
+V  [jvm.dll+0x55ef74]
+V  [jvm.dll+0x6dd4ca]
+V  [jvm.dll+0x6e074b]
+V  [jvm.dll+0x6e020b]

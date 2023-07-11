@@ -1,6 +1,6 @@
 package com.eshoppingzone.orders.resource;
 
-import java.util.List;   
+import java.util.List;     
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +16,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eshoppingzone.mailservice.EmailService;
 import com.eshoppingzone.orders.model.Address;
 import com.eshoppingzone.orders.model.Cart;
 import com.eshoppingzone.orders.model.Items;
 import com.eshoppingzone.orders.model.Orders;
 import com.eshoppingzone.orders.model.Product;
+import com.eshoppingzone.orders.model.TransactionDetails;
+import com.eshoppingzone.orders.model.UserProfile;
 import com.eshoppingzone.orders.service.OrderService;
+import com.netflix.discovery.converters.Auto;
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
@@ -29,6 +33,7 @@ import com.razorpay.RazorpayException;
 
 @RestController
 @RequestMapping("/order")
+@CrossOrigin(origins="*",maxAge = 3600)
 public class OrderResource {
 	
 	@Autowired
@@ -39,6 +44,12 @@ public class OrderResource {
 	
 	@Autowired
 	private DeletingCart dl;
+	
+	@Autowired
+	private GetUserProfile ul;
+	
+	@Autowired
+	private EmailService em;
 	
 	OrderResource(){
 		
@@ -59,19 +70,32 @@ public class OrderResource {
 	
 	//get order by customer Id
 	@GetMapping("/getOrderByCust/{customerId}")
-	public List<Orders> getOrderByCustomerId(int customerId){
+	public List<Orders> getOrderByCustomerId(@PathVariable int customerId){
 		return orderService.getOrderByCustomerId(customerId);
 		
 	}
+	
+	
+	@GetMapping("/getOrderById/{orderId}")
+	public Orders getOrderById(@PathVariable int orderId){
+		return orderService.getOrderById(orderId);
+		
+	}
+	
+	
+	
 	//get address by  customer by id
 	@GetMapping("/getAddByCust/{customerId}")
-	public List<Address> getAddressByCustomerId(int customerId) {
+	public List<Address> getAddressByCustomerId(@PathVariable int customerId) {
 		return orderService.getAddressByCustomerId(customerId);
 	}
 	
 	//place order for customer with fullName
 	@PostMapping("/placeOrder/{mode}/{fullName}")
 	public void placeOrder(@RequestBody Cart cart ,@PathVariable String mode,@PathVariable String fullName) {
+		
+		
+		UserProfile up = ul.getByUserName(fullName);
 		
 		List<Items> i = cart.getItems();
 		
@@ -84,14 +108,17 @@ public class OrderResource {
 		
 		dl.deleteCart(cart.getCartId());
 		
+		String body = "Hello "+fullName+" "+"Your order is placed successfully, You will recieve your order within 4-5 working days :). "+" "+"Kindly visit our website for more shopping. ";
+
+		em.sendSimpleMail(up.getEmailId(), body, "Order Placed");
+		
 	}
 	
 	// online payment
-	@PostMapping("/pay")
-	public String onlinePayment(@RequestBody Cart cart) throws RazorpayException {
-			
-		return orderService.onlinePayment(cart);
- }
+	@GetMapping("/createTransaction/{amount}")
+	public TransactionDetails createTransaction(@PathVariable double amount) {
+		return orderService.createTransaction(amount);
+	}
 		
 	
 	//add address for order
@@ -110,7 +137,7 @@ public class OrderResource {
 	@DeleteMapping("/deleteOrder/{orderId}")
 	public ResponseEntity<String> deleteOrder(@PathVariable int orderId){
 		orderService.deleteOrder(orderId);
-		return  ResponseEntity.ok("Your order is deleted with"+ orderId);
+		return  ResponseEntity.ok("Your order is deleted with "+ orderId);
 	}
 	
 	//get order by customer fullName

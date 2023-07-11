@@ -1,6 +1,6 @@
 package com.eshoppingzone.resource;
 
-import java.util.ArrayList; 
+import java.util.ArrayList;  
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,6 +35,7 @@ import com.eshoppingzone.service.CartServiceImpl;
 
 @RestController
 @RequestMapping("/cart")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class CartResource {
 	
 	
@@ -62,7 +63,7 @@ public class CartResource {
 	//add product to cart using productId and cart Id
 	@PostMapping("/addToCart/{cartId}/{productId}")
 	public ResponseEntity<Cart> addCart( @PathVariable(value="cartId")  int cartId ,@PathVariable(value="productId")  int productId) {
-Product product=restTemplate.getForObject("http://localhost:8002/product/findById/"+productId,Product.class);
+Product product=restTemplate.getForObject("http://localhost:8082/product/findById/"+productId,Product.class);
 		
 		logger.info(""+product);
 		if(cartRepository.existsById(cartId)) {
@@ -183,7 +184,7 @@ Product product=restTemplate.getForObject("http://localhost:8002/product/findByI
 	@PutMapping("/delete/item/{productId}/{cartId}")
 	public Cart deleteCartItem(@PathVariable int productId ,@PathVariable int cartId) {
 		
-		Product product=restTemplate.getForObject("http://product-service/product/findById/"+productId,Product.class);
+		Product product=restTemplate.getForObject("http://localhost:8082/product/findById/"+productId,Product.class);
 
 		Cart cart2=cartServiceImpl.getcartById(cartId);
 		List<Items> list= new ArrayList<>();
@@ -210,17 +211,9 @@ Product product=restTemplate.getForObject("http://localhost:8002/product/findByI
 	@PutMapping("/increaseQuant/{productId}/{cartId}")
 	public Cart increaseItem(@PathVariable int productId,@PathVariable int cartId) {
 		
-		
 		Cart cart =cartServiceImpl.getcartById(cartId);
-		
-	
 		List<Items> oldItem3 =cart.getItems();
 		
-	
-		
-
-			
-
 			for (Items i : oldItem3) {
 				
 				if(i.getProductId()==productId) {
@@ -271,6 +264,10 @@ Product product=restTemplate.getForObject("http://localhost:8002/product/findByI
 			
 			
 	}
+	
+
+	
+	
 	}
 	
 	

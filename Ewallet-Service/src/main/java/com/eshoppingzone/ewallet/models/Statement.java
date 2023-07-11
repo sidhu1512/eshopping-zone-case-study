@@ -8,8 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-@Data
+//@Data
+//@AllArgsConstructor
 @Document("Statement")
 public class Statement {
 	
@@ -19,7 +19,7 @@ public class Statement {
 	private double amount;
 
 	private LocalDateTime dateTime;
-	
+	private String orderId;
 	private Ewallet eWallet;
 	
 	//Default Constructor
@@ -42,6 +42,89 @@ public class Statement {
 
 
 
+	public int getStatementId() {
+		return statementId;
+	}
+
+
+
+
+	public void setStatementId(int statementId) {
+		this.statementId = statementId;
+	}
+
+
+
+
+	public TransactionType getTransactionType() {
+		return transactionType;
+	}
+
+
+
+
+	public void setTransactionType(TransactionType transactionType) {
+		this.transactionType = transactionType;
+	}
+
+
+
+
+	public double getAmount() {
+		return amount;
+	}
+
+
+
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+
+
+
+	public LocalDateTime getDateTime() {
+		return dateTime;
+	}
+
+
+
+
+	public void setDateTime(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
+	}
+
+
+
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+
+
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
+
+
+
+
+	public Ewallet geteWallet() {
+		return eWallet;
+	}
+
+
+
+
+	public void seteWallet(Ewallet eWallet) {
+		this.eWallet = eWallet;
+	}
+	
+	
+	
 
 
 }

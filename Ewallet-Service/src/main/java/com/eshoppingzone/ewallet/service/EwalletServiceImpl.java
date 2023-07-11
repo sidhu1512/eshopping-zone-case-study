@@ -1,11 +1,11 @@
 package com.eshoppingzone.ewallet.service;
 
-import java.time.LocalDate; 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-
+import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,11 +30,14 @@ public class EwalletServiceImpl implements EwalletService {
 		return ewalletRepo.findAll();
 	}
 
-
+//	@Override
+//	public Ewallet addWallet(Ewallet addwallet) {
+//		return ewalletRepo.save(addwallet);
+//	}
 	
 	@Override
 	public Ewallet addWalletForProfile(int profileId) {
-		Ewallet newWallet = new Ewallet(profileId,0);
+		Ewallet newWallet = new Ewallet(profileId,0,new ArrayList<String>());
 		return ewalletRepo.save(newWallet);
 	}
 

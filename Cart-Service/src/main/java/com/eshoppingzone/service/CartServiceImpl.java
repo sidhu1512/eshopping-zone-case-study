@@ -1,18 +1,16 @@
 package com.eshoppingzone.service;
 
-import java.util.ArrayList;  
+
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 
 import com.eshoppingzone.entities.Cart;
-import com.eshoppingzone.entities.Items;
-import com.eshoppingzone.entities.Product;
+
 import com.eshoppingzone.exception.CartAlreadyExistsException;
 import com.eshoppingzone.exception.CartNotFoundException;
 import com.eshoppingzone.repository.CartRepository;
@@ -64,7 +62,7 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public Cart addCart(Cart cart) throws CartAlreadyExistsException {
-//		cart.setCartId(seqService.getSequenceNum(cart.sequenceName));
+
 		return cartRepository.save(cart);
 	}
 

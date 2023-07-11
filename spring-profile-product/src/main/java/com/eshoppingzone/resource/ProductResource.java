@@ -1,6 +1,6 @@
 package com.eshoppingzone.resource;
 
-import java.util.List;   
+import java.util.List;    
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -30,6 +30,7 @@ import com.eshoppingzone.service.ProductService;
 import com.eshoppingzone.service.ProductServiceImpl;
 
 
+@CrossOrigin(origins="*",maxAge = 3600)
 @RestController
 @RequestMapping("/product")
 public class ProductResource {
@@ -54,8 +55,7 @@ public class ProductResource {
 
 	@GetMapping("/allProducts")
 	public List<Product> getAllProducts() {
-		logger.info("getting All Products");
-		List<Product> pro=productServiceImpl.getAllProducts();
+	 List<Product> pro=productServiceImpl.getAllProducts();
 		return pro;
 	}
 
@@ -83,7 +83,7 @@ public class ProductResource {
 		return new ResponseEntity<>(productServiceImpl.getProductByCategory(category),HttpStatus.OK);
 	}
 
-	@PutMapping("/update/{productId}")
+	@PutMapping("/updateProduct/{productId}")
 	public ResponseEntity<Product> updateProduct(@PathVariable int productId, @Valid @RequestBody Product product) throws ProductNotFoundException {
 		
 		return  ResponseEntity.ok(productServiceImpl.updateProducts(productId,product));
@@ -106,6 +106,7 @@ public class ProductResource {
 			
 			
 	}
+
 	
 	
 	

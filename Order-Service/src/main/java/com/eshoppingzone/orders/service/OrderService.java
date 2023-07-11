@@ -9,6 +9,7 @@ import com.eshoppingzone.orders.model.Address;
 import com.eshoppingzone.orders.model.Cart;
 import com.eshoppingzone.orders.model.Orders;
 import com.eshoppingzone.orders.model.Product;
+import com.eshoppingzone.orders.model.TransactionDetails;
 import com.razorpay.RazorpayException;
 
 //interface for order service layer
@@ -24,9 +25,11 @@ public interface OrderService {
 	List<Address> getAddressByCustomerId(int customerId);
 	List<Address> getAllAddress();
 	Orders getOrderById(int orderId);
-	String onlinePayment(Cart cart) throws RazorpayException;
+	
 	
 	List<Orders> findOrderByFullName(String fullName);
+	
+	TransactionDetails createTransaction(double amount);
 	
 
 }

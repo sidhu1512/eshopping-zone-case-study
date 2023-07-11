@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import com.eshoppingzone.orders.model.Product;
 
-@FeignClient(value = "product-service",url ="http://localhost:8002/product")
+@FeignClient(value = "product-service",url ="http://localhost:8082/product")
 public interface PlacingOrder {
 	
 	@DeleteMapping("/decreaseQuant/{productId}/{quantity}")

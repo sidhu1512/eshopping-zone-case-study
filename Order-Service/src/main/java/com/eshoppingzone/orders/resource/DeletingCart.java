@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.eshoppingzone.orders.model.Cart;
 
-@FeignClient(value = "cart-service",url ="http://localhost:8003/cart")
+@FeignClient(value = "cart-service",url ="http://localhost:8083/cart")
 public interface DeletingCart {
 	
 	@DeleteMapping("/delete/{cartId}")

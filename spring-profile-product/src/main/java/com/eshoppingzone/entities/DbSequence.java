@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 /*@document- to specify custom property values*/
+/*setting collection name */
 @Document(collection="ProductIdSeq")
 public class DbSequence {
     /*Providing all variables required */

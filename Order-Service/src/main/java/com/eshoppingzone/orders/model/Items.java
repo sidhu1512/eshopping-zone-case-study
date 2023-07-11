@@ -22,7 +22,7 @@ public class Items {
 	@Min(1)
 	private int quantity;
 	
-	
+	private String image;
 	
 	
 	
@@ -67,6 +67,7 @@ public class Items {
 		this.price = price;
 		this.quantity = quantity;
 	}
+	
 	public Items() {
 		
 	}

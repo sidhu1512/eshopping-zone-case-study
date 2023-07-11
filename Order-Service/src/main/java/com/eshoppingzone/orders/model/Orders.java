@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 
 
 @Data
-//@AllArgsConstructor
-//@NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Document(collection = "Orders")
 //order model to store orders
 public class Orders {
@@ -39,6 +39,7 @@ public class Orders {
 	private int quantity;   // quantity must decrease after ordering
 	private String fullName;
 	private Address address;
+	private List<Items> items;
 	
 	
 	
@@ -47,86 +48,6 @@ public class Orders {
 	
 	
 	
-	public Orders(int orderId, LocalDate orderDate, Integer customerId, double ammountPaid, String modeOfPayment,
-			String orderStatus, int quantity, String fullName, Address address) {
-		super();
-		this.orderId = orderId;
-		this.orderDate = orderDate;
-		this.customerId = customerId;
-		this.ammountPaid = ammountPaid;
-		this.modeOfPayment = modeOfPayment;
-		this.orderStatus = orderStatus;
-		this.quantity = quantity;
-		this.fullName = fullName;
-		this.address = address;
-	}
-	
-	public Orders() {
-	
-	}
-	
-	
-	
-	public int getOrderId() {
-		return orderId;
-	}
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
-	}
-	public LocalDate getOrderDate() {
-		return orderDate;
-	}
-	public void setOrderDate(LocalDate orderDate) {
-		this.orderDate = orderDate;
-	}
-	public Integer getCustomerId() {
-		return customerId;
-	}
-	public void setCustomerId(Integer customerId) {
-		this.customerId = customerId;
-	}
-	public double getAmmountPaid() {
-		return ammountPaid;
-	}
-	public void setAmmountPaid(double ammountPaid) {
-		this.ammountPaid = ammountPaid;
-	}
-	public String getModeOfPayment() {
-		return modeOfPayment;
-	}
-	public void setModeOfPayment(String modeOfPayment) {
-		this.modeOfPayment = modeOfPayment;
-	}
-	public String getOrderStatus() {
-		return orderStatus;
-	}
-	public void setOrderStatus(String orderStatus) {
-		this.orderStatus = orderStatus;
-	}
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-	public String getFullName() {
-		return fullName;
-	}
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
-	public Address getAddress() {
-		return address;
-	}
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-	public static String getSequenceName() {
-		return SEQUENCE_NAME;
-	}
-	//sequence genrator for orderId
-
-
 
 
 	
