@@ -1,0 +1,31 @@
+
+<div class="container" *ngIf="orderhis">
+
+  <h1 class="font1 my-3 pt-5 text-center">Order History</h1>
+  <table class="table table-hover text-center text-black-50">
+    <thead>
+    <tr>
+      <th>Product Image</th>
+      <th>Product Name</th>
+      <th>Product Quantity</th>
+      <th>Product Price</th>
+      
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let product of orderData.items">
+      <td><img src="{{product.image}}" height="120px" width="130px"></td>
+      <td><b>{{product.productName}}</b></td>
+      <td>{{product.quantity}}</td>
+      <td>{{product.price}}</td>
+     
+    </tr>
+    <tr> <td>{{orderData.amountPaid}}</td></tr>
+    </tbody>
+  </table>
+
+  <button class="btn-success btn-lg mb-5 w-100" (click)="onclickShopNow()">Shop More</button>
+
+</div>
+<app-footer></app-footer>

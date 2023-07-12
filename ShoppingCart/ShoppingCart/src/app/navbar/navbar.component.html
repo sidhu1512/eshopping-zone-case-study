@@ -1,0 +1,80 @@
+<mat-toolbar color="primary">
+  <span routerLink="/home" ><img  src="/assets/shopping-cart.png"
+    height="50px"
+    width="50px" routerLink="/home" >Shopping Zone</span>
+  <div class="spacer"></div>
+    <a  mat-raised-button routerLink="/login">Signin</a>
+    &nbsp;&nbsp;
+    <a mat-raised-button routerLink="/signup">SignUp</a>
+  </mat-toolbar>
+  
+  <mat-toolbar *ngIf="!isLoggedIn">
+    <button mat-raised-button routerLink="">Home</button>
+  </mat-toolbar>
+  <mat-toolbar *ngIf="isLoggedIn">
+    <a mat-raised-button routerLink="/home">
+      <mat-icon  >home</mat-icon>
+    </a>
+    &nbsp;&nbsp;
+    <button mat-raised-button *ngIf="showAddProducts" routerLink="/products">
+      Products
+    </button>
+    &nbsp;&nbsp;
+    <button mat-raised-button *ngIf="showProducts" routerLink="/add-product">
+      Add
+    </button>
+
+    &nbsp;&nbsp;&nbsp;
+    <mat-form-field>
+    <mat-label>Account</mat-label>
+    
+    <mat-select>
+      <mat-option routerLink="/profile">
+        Profile
+      </mat-option>
+      <mat-option (click)="onLogout()">
+        Logout
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  &nbsp;
+  &nbsp;
+  <mat-form-field>
+    <mat-label>Type</mat-label>
+  <mat-select>
+    <mat-option routerLink="/home" (click)="getAll()">
+      All
+    </mat-option>
+    <mat-option (click)="filter('Clothing')">
+      Clothing
+    </mat-option>
+    <mat-option (click)="filter('Electronics')">
+      Electronics
+    </mat-option>
+    <mat-option (click)="filter('Books')">
+      Books
+    </mat-option>
+    <mat-option (click)="filter('Shoes')">
+      Footwear
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+&nbsp;
+    &nbsp;<a mat-raised-button *ngIf="showCart" (click)="onClickCart()">
+      <mat-icon style="font-size: 20px">add_shopping_cart</mat-icon></a
+    >&nbsp;&nbsp;
+    <button *ngIf="showCart" mat-raised-button routerLink="/order-history">
+      Order History
+    </button>
+    &nbsp;
+    <div>
+      <input
+        class="styleSearch"
+        type="text"
+        placeholder="search products"
+        [(ngModel)]="searchTerm"
+        (keyup)="search($event)"
+      />
+    </div>
+    <mat-icon class="search-icon">search</mat-icon>
+  </mat-toolbar>

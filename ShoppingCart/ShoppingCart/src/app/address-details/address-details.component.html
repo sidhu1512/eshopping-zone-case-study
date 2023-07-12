@@ -1,0 +1,120 @@
+<div class="container mt-5" *ngIf = "username">
+  <div class="card p-2" id="card1">
+    <div class="row">
+      <div class="orderdetails">
+        <h4>Please confirm Your order details!</h4>
+        <h5>After clicking proceed your order will be placed</h5>
+      </div>
+      <div class="container">
+        <div class="row mx-0 justify-content-center">
+          <div class="col-md-9 col-lg-8 px-lg-4 col-xl-8 px-xl-0 px-xxl-3">
+            <form
+            #myForm="ngForm"
+            >
+
+            <label class="d-block mb-4">
+              <span class="form-label d-block">Your name</span>
+              <input
+                name="fullName"
+                type="text"
+                class="form-control"
+                value="{{ username }}"
+                [(ngModel)]="addData.fullName"
+              />
+            </label>
+      
+              <label class="d-block mb-4">
+                <span class="form-label d-block">Flat Number</span>
+                <input
+                  name="flatNumber"
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="addData.flatNumber"
+                 
+                />
+              </label>
+      
+      
+              <label class="d-block mb-4">
+                <span class="form-label d-block">City</span>
+                <input name="city" type="text" class="form-control" [(ngModel)]="addData.city"  />
+              </label>
+      
+              <label class="d-block mb-4">
+                <span class="form-label d-block">State/Province</span>
+                <input name="state" type="text" class="form-control" [(ngModel)]="addData.state" />
+              </label>
+      
+              <label class="d-block mb-4">
+                <span class="form-label d-block">Zip/Postal code</span>
+                <input name="pincode" type="number" class="form-control" [(ngModel)]="addData.pincode"/>
+              </label>
+      
+              <label class="d-block mb-4">
+                <span class="form-label d-block">Country</span>
+                <input
+                  name="country"
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="addData.country"
+                />
+              </label>
+      
+              <label class="d-block mb-4">
+                <span class="form-label d-block">Mobile</span>
+                <input
+                  name="mobileNumber"
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="addData.mobileNumber"
+                />
+              </label>
+      
+             
+      
+              <div class="mb-3">
+                <button type="submit" class="btn btn-primary px-3 rounded-3" (click)="onSubmit()">
+                  Save
+                </button>
+              </div>
+      
+          
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="card p-5" id="table">
+        <table class="table table-responsive">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Product Quantity</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of cartData.items">
+              <td>{{ product.productName }}</td>
+              <td class="style">{{ product.quantity }}</td>
+              <td class="style">{{ product.price }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="align-center">
+          <button class="btn btn-success">
+            Total:Rs.{{ cartData.totalPrice }}</button
+          >&nbsp;
+          <button class="btn btn-warning">
+            <a
+              href="{{ paymentLink() }}"
+              style="text-decoration: none"
+              (click)="emptyCart()"
+              *ngIf="addressAdded"
+              >Proceed</a
+            >
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
